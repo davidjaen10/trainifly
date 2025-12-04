@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        {% block header %}
+        {% include "portfolio/header.html" %}
+        {% endblock header %}   
+    </div>
+
+
+    <div class='container'>
+        {% block content %}
+        {% endblock content %}
+    </div>
+
+    <div>
+        {% block footer %}
+        {% include "portfolio/footer.html" %}
+        {% endblock footer %}
+    </div>
+
+</body>
+</html>

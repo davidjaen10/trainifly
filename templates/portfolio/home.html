@@ -1,0 +1,16 @@
+{% extends 'portfolio/base.html' %}
+
+{% block content %}
+<p>Usuarios</p>
+    {% for usuario in usuarios %}
+        {{ usuario.nombre }}<br>
+    {% empty%}
+        No hay usuarios    
+    {% endfor %}
+
+    <form method="get">
+        <input type="text" name="q" placeholder="Buscar usuario.." value="{{ request.GET.q }}">
+        <input type="checkbox" name="marcado" value= "True" {% if marcado == "True" %} checked {% endif %} > Marcado
+        <button type="submit">Buscar</button>
+    </form>
+{% endblock %}

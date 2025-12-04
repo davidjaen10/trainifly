@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "81:8000"
+    volumes:
+      - ./:/code
+    depends_on:
+      - db
+    environment:
+      - DB_NAME=davidBD
+      - DB_USER=david
+      - DB_PASSWORD=david
+      - DB_HOST=db
+      - DB_PORT=5432
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: davidBD
+      POSTGRES_USER: david
+      POSTGRES_PASSWORD: david
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data:
