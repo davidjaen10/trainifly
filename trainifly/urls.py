@@ -25,7 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.HomeView.as_view(), name= 'home'),
     path('create/', view = views2.UserCreateView.as_view(), name='crear' ),
-    path('clases_actualizar/<int:pk>', view= views2.UserUpdateView.as_view(), name="actualizar")
+    path('clases_actualizar/<int:pk>', view= views2.UserUpdateView.as_view(), name="actualizar"),
 ]
 
 if settings.DEBUG:
