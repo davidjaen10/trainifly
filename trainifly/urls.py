@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from users import views
 from clases import views as views2
+from clases import views as views3
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -26,6 +27,7 @@ urlpatterns = [
     path('', views.HomeView.as_view(), name= 'home'),
     path('create/', view = views2.UserCreateView.as_view(), name='crear' ),
     path('clases_actualizar/<int:pk>', view= views2.UserUpdateView.as_view(), name="actualizar"),
+    path('listado_clases/', view = views3.clasesListView.as_view(), name = 'listado'),
 ]
 
 if settings.DEBUG:
