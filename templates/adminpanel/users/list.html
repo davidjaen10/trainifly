@@ -1,0 +1,25 @@
+<h1>Administrar Usuarios</h1>
+
+<a href="{% url 'admin_users_create' %}">Añadir nuevo usuario</a>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Acciones</th>
+    </tr>
+
+    {% for u in usuarios %}
+    <tr>
+        <td>{{ u.id }}</td>
+        <td>{{ u.nombre }}</td>
+        <td>{{ u.email }}</td>
+        <td>
+            <a href="{% url 'admin_users_edit' u.id %}">Editar</a> |
+            <a href="{% url 'admin_users_delete' u.id %}">Eliminar</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+

@@ -1,0 +1,22 @@
+<h1>Administrar Clases</h1>
+
+<a href="{% url 'admin_clases_create' %}">Añadir nueva clase</a>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Acciones</th>
+    </tr>
+
+    {% for clase in clases %}
+    <tr>
+        <td>{{ clase.id }}</td>
+        <td>{{ clase.clase }}</td>
+        <td>
+            <a href="{% url 'admin_clases_edit' clase.id %}">Editar</a> |
+            <a href="{% url 'admin_clases_delete' clase.id %}">Eliminar</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>

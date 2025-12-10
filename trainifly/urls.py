@@ -21,6 +21,8 @@ from clases import views as views2
 from clases import views as views3
 from django.conf.urls.static import static
 from django.conf import settings
+from adminpanel import views_clases, views_users
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,6 +30,15 @@ urlpatterns = [
     path('create/', view = views2.UserCreateView.as_view(), name='crear' ),
     path('clases_actualizar/<int:pk>', view= views2.UserUpdateView.as_view(), name="actualizar"),
     path('listado_clases/', view = views3.clasesListView.as_view(), name = 'listado'),
+    path('adminpanel/clases/', views_clases.clases_list, name='admin_clases_list'),
+    path('adminpanel/clases/nueva/', views_clases.clases_create, name='admin_clases_create'),
+    path('adminpanel/clases/<int:id>/editar/', views_clases.clases_edit, name='admin_clases_edit'),
+    path('adminpanel/clases/<int:id>/eliminar/', views_clases.clases_delete, name='admin_clases_delete'),
+    path('adminpanel/usuarios/', views_users.users_list, name='admin_users_list'),
+    path('adminpanel/usuarios/nuevo/', views_users.users_create, name='admin_users_create'),
+    path('adminpanel/usuarios/<int:id>/editar/', views_users.users_edit, name='admin_users_edit'),
+    path('adminpanel/usuarios/<int:id>/eliminar/', views_users.users_delete, name='admin_users_delete'),
+
 ]
 
 if settings.DEBUG:

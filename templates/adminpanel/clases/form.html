@@ -1,0 +1,9 @@
+<h1>{{ modo }} Clase</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">{{ modo }}</button>
+</form>
+
+<a href="{% url 'admin_clases_list' %}">Volver</a>

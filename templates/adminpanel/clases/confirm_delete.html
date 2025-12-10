@@ -1,0 +1,10 @@
+<h1>Eliminar Clase</h1>
+
+<p>Estas seguro que quieres eliminar la clase <strong>{{ clase.nombre }}</strong>?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Eliminar</button>
+</form>
+
+<a href="{% url 'admin_clases_list' %}">Cancelar</a>
