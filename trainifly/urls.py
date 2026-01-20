@@ -23,11 +23,19 @@ from django.conf.urls.static import static
 from django.conf import settings
 from adminpanel import views_clases, views_users
 from common import views as viewcommon
+from rest_framework.routers import DefaultRouter
+from rest_framework import routers
+from api import views as api_views
+
+router = routers.DefaultRouter()
+router.register('user_list', api_views.UserListViewSet, basename = 'user_list')
+router.register('user_crud', api_views.UserCRUDView, basename = 'user_crud')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.HomeView.as_view(), name= 'home'),
-    path('create/', view = views2.UserCreateView.as_view(), name='crear' ),
+    path('', viewcommon.HomeView.as_view(), name= 'home'),
+    path('create/', view = views.UserCreateView.as_view(), name='crear' ),
     path('clases_actualizar/<int:pk>', view= views2.UserUpdateView.as_view(), name="actualizar"),
     path('listado_clases/', view = views3.clasesListView.as_view(), name = 'listado'),
     path('adminpanel/clases/', views_clases.clases_list, name='admin_clases_list'),
@@ -40,6 +48,7 @@ urlpatterns = [
     path('adminpanel/usuarios/<int:id>/eliminar/', views_users.users_delete, name='admin_users_delete'),
     path('accounts/', include('allauth.urls')),
     path('login/', view = viewcommon.LoginView.as_view(), name='login'),
+    path('api/', include(router.urls)),
 ]
 
 if settings.DEBUG:

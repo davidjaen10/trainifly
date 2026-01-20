@@ -1,31 +1,44 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
+from django import forms
+from django.urls import reverse_lazy
+from django.contrib.auth import login
+from django.views.generic import CreateView
 from .models import User
 
-class HomeView(TemplateView):
-    template_name = 'portfolio/home.html'
+class UserRegisterForm(forms.ModelForm):
+    password1 = forms.CharField(label="Contraseña", widget=forms.PasswordInput)
+    password2 = forms.CharField(label="Repite contraseña", widget=forms.PasswordInput)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        q = self.request.GET.get('q', '') #obtener el texto buscado
-        if q:
-            context["usuarios"] = User.objects.filter(nombre__icontains = q)#.exclude(nombre__iexact="geyzan")
-        else:
-            #user_pag = 10
-            #num_pag = 4
-            context['usuarios'] = User.objects.all()#[num_pag:user_pag*num_pag]#devuelve
-        marcado_vista = self.request.GET.get('marcado', '')
-        if marcado_vista == "True":
-            context["usuarios"] = context["usuarios"].filter(edad__lte=10).order_by("nombre")#SI ESTA MARCADO FILTRAR
-        context["marcado"] = marcado_vista
+    class Meta:
+        model = User
+        fields = ["email", "nombre", "edad"]  # NO ponemos password aquí
 
-        #usuario = Usuario(nombre="pepe".....) para crear un usuario
-        #usuario.save() para guardarlo
-        context['q'] = q
-        return context
+    def clean(self):
+        cleaned = super().clean()
+        p1 = cleaned.get("password1")
+        p2 = cleaned.get("password2")
 
-    def form_Valid(self, form):
-        usuario = form.save(commit = False)
-        usuario.set_password(form.cleaned_data['password'])
-        usuario.save()
+        if p1 and p2 and p1 != p2:
+            self.add_error("password2", "Las contraseñas no coinciden.")
+
+        return cleaned
+
+class UserCreateView(CreateView):
+    model = User
+    form_class =UserRegisterForm
+    success_url = reverse_lazy("home")
+
+    def form_valid(self, form):
+        user = form.save(commit=False)
+
+        # activamos el user
+        user.is_active = True
+
+        # para el hash de la contraseña
+        user.set_password(form.cleaned_data["password"])
+        user.save()
+
+        # Para iniciar sesion automaticamente
+        login(self.request, user)
+
         return super().form_valid(form)

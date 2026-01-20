@@ -1,55 +1,84 @@
-{% extends 'portfolio/base.html' %}
 {% load socialaccount %}
-{% block content %}
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
   <title>Login / Sign Up - TrainiFly</title>
+
 </head>
 <body>
   <header class="public-header">
     <div class="container-header">
-      <div class="brand">
-        <img src="img/logo.png" alt="TrainiFly" class="logo">
-      </div>
       <nav class="nav-header">
-        <a href="inicio_user.html" class="nav-link">Inicio</a>
+        <a href="{% url 'home' %}"" class="nav-link">Inicio</a>
       </nav>
     </div>
   </header>
   <div class="wrapper login">
-    <div class="container">
-      <div class="col-left">
-        <div class="login-text">
-          <h2>Bienvenido!</h2>
-          <a href="form.html" class="btn">Crear Cuenta</a>
-          <a href="{% provider_login_url 'google' %}" class="google-btn">
-            <i class="fab fa-google"></i>
-          </a>
-        </div>
+  <div class="container">
+    
+    <div class="col-left">
+      <div class="login-text">
+        <h2>Bienvenido!</h2>
+
+        <a href="{% url 'crear' %}" class="btn">Crear Cuenta</a>
+
+        <a href="{% provider_login_url 'google' %}" class="google-btn">
+          <i class="fab fa-google"></i>
+        </a>
       </div>
-      <div class="col-right">
-        <div class="login-form">
-          <h2>Login</h2>
-          <form action="">
-            <p> <label>Email<span>*</span></label> <input type="email" placeholder="Introduce tu Email" required> </p>
-            <p> <label>Contraseña<span>*</span></label> <input type="password" placeholder="Introduce tu contraseña" required> </p>
-            <p> <input type="submit" value="Iniciar Sesion"> </p>
-            <p> <a href="">Has olvidado tu contraseña?</a> </p>
-          </form>
-        </div>
+    </div>
+
+    <div class="col-right">
+      <div class="login-form">
+
+        <form method="POST">
+          {% csrf_token %}
+
+          <h1>Inicia Sesion</h1>
+
+          <div class="social-icons">
+            <a href="{% provider_login_url 'google' %}" class="icon">
+              <i class="fa-brands fa-google"></i>
+            </a>
+          </div>
+
+          <span>o usa tu email y contraseña</span>
+
+          {% if form.non_field_errors %}
+              <div style="color: #ff6b6b; margin: 10px 0;">
+                  {% for error in form.non_field_errors %}
+                      <p>{{ error }}</p>
+                  {% endfor %}
+              </div>
+          {% endif %}
+
+          {{ form.email }}
+          {% if form.email.errors %}
+              <div style="color: #ff6b6b; font-size: 12px;">
+                {{ form.email.errors }}
+              </div>
+          {% endif %}
+
+          {{ form.password }}
+          {% if form.password.errors %}
+              <div style="color: #ff6b6b; font-size: 12px;">
+                {{ form.password.errors }}
+              </div>
+          {% endif %}
+
+          <a href="#">¿Has olvidado tu contraseña?</a>
+          <button type="submit">Iniciar Sesion</button>
+        </form>
+
       </div>
     </div>
   </div>
-
-<footer class="public-footer">
-  <p>TrainiFly © 2025</p>
-</footer>
+</div>
 
 </body>
 </html>
-{% endblock %}
