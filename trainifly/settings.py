@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+#Aqui añadimos lo del crispy
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -43,7 +44,30 @@ INSTALLED_APPS = [
     'users',
     'clases',
     'adminpanel',
+    'crispy_forms',
+    'crispy_bootstrap5',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
+
+SITE_ID = 1
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # login normal
+    'allauth.account.auth_backends.AuthenticationBackend',  # allauth
+]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': 'TU_CLIENT_ID_AQUI',
+            'secret': 'TU_CLIENT_SECRET_AQUI',
+            'key': ''
+        }
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -53,6 +77,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'trainifly.urls'
@@ -111,6 +136,13 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+#ESTO ES PARA LAS PLANTILLAS
+CRISPY_ALLOWED_TEMPLATES_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+AUTH_USER_MODEL = 'users.User'
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
@@ -127,6 +159,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 
 # Default primary key field type

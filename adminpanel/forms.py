@@ -1,6 +1,6 @@
 from django import forms
 from clases.models import Clase
-from users.models import Usuario
+from users.models import User
 
 class ClaseAdminForm(forms.ModelForm):
     class Meta:
@@ -9,5 +9,5 @@ class ClaseAdminForm(forms.ModelForm):
 
 class UserAdminForm(forms.ModelForm):
     class Meta:
-        model = Usuario
+        model = User
         fields = '__all__'

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
-from .models import Usuario
+from .models import User
 
 class HomeView(TemplateView):
     template_name = 'portfolio/home.html'
@@ -9,11 +9,11 @@ class HomeView(TemplateView):
         context = super().get_context_data(**kwargs)
         q = self.request.GET.get('q', '') #obtener el texto buscado
         if q:
-            context["usuarios"] = Usuario.objects.filter(nombre__icontains = q)#.exclude(nombre__iexact="geyzan")
+            context["usuarios"] = User.objects.filter(nombre__icontains = q)#.exclude(nombre__iexact="geyzan")
         else:
             #user_pag = 10
             #num_pag = 4
-            context['usuarios'] = Usuario.objects.all()#[num_pag:user_pag*num_pag]#devuelve
+            context['usuarios'] = User.objects.all()#[num_pag:user_pag*num_pag]#devuelve
         marcado_vista = self.request.GET.get('marcado', '')
         if marcado_vista == "True":
             context["usuarios"] = context["usuarios"].filter(edad__lte=10).order_by("nombre")#SI ESTA MARCADO FILTRAR
@@ -23,5 +23,9 @@ class HomeView(TemplateView):
         #usuario.save() para guardarlo
         context['q'] = q
         return context
-    
 
+    def form_Valid(self, form):
+        usuario = form.save(commit = False)
+        usuario.set_password(form.cleaned_data['password'])
+        usuario.save()
+        return super().form_valid(form)

@@ -1,10 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from users.models import Usuario
+from users.models import User
 from .forms import UserAdminForm
 
 def users_list(request):
-    usuarios = Usuario.objects.all()
+    usuarios = User.objects.all()
     return render(request, 'adminpanel/users/list.html', {'usuarios': usuarios})
 
 def users_create(request):
@@ -21,7 +21,7 @@ def users_create(request):
 
 
 def users_edit(request, id):
-    usuario = get_object_or_404(Usuario, id=id)
+    usuario = get_object_or_404(User, id=id)
 
     if request.method == 'POST':
         form = UserAdminForm(request.POST, instance=usuario)
@@ -35,7 +35,7 @@ def users_edit(request, id):
     return render(request, 'adminpanel/users/form.html', {'form': form, 'modo': 'Editar'})
 
 def users_delete(request, id):
-    usuario = get_object_or_404(Usuario, id=id)
+    usuario = get_object_or_404(User, id=id)
 
     if request.method == 'POST':
         usuario.delete()
