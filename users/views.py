@@ -42,5 +42,6 @@ class UserCreateView(CreateView):
         user.is_active = True
         user.set_password(form.cleaned_data["password1"])
         user.save()
-        login(self.request, user)
+        
+        login(self.request, user,  backend="django.contrib.auth.backends.ModelBackend")
         return super().form_valid(form)
