@@ -46,6 +46,7 @@ urlpatterns = [
     path('adminpanel/usuarios/nuevo/', views_users.users_create, name='admin_users_create'),
     path('adminpanel/usuarios/<int:id>/editar/', views_users.users_edit, name='admin_users_edit'),
     path('adminpanel/usuarios/<int:id>/eliminar/', views_users.users_delete, name='admin_users_delete'),
+    path('inicio_admin/', viewcommon.AdminPortfolioView.as_view(), name="inicio_admin"),
     path('accounts/', include('allauth.urls')),
     path('login/', view = viewcommon.LoginView.as_view(), name='login'),
     path('api/', include(router.urls)),

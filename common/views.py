@@ -3,9 +3,13 @@ from django.views.generic import TemplateView, FormView
 from users.forms import UserLoginForm
 from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect
+from users.models import User
 
 class HomeView(TemplateView):
     template_name = 'portfolio/home.html'
+
+class AdminPortfolioView(TemplateView):
+    template_name = "portfolio/admin.html"
 
 class LoginView(FormView):
     template_name = 'portfolio/login.html'
@@ -15,11 +19,27 @@ class LoginView(FormView):
         email = form.cleaned_data["email"]
         password = form.cleaned_data["password"]
 
-        user = authenticate(self.request, email=email, password=password)
+        try:
+            user_obj = User.objects.get(usuario=email)
+        except User.DoesNotExist:
+            try:
+                user_obj = User.objects.get(email=email)
+            except User.DoesNotExist:
+                user_obj = None
+
+        if user_obj is None:
+            form.add_error(None, "Email o contraseña incorrectos.")
+            return self.form_invalid(form)
+
+        user = authenticate(self.request, username=user_obj.usuario, password=password)
 
         if user is None:
             form.add_error(None, "Email o contraseña incorrectos.")
             return self.form_invalid(form)
 
         login(self.request, user)
+
+        if user.is_staff or user.is_superuser:
+            return redirect("inicio_admin")
+        
         return redirect("home")
