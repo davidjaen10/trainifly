@@ -34,8 +34,8 @@ DEBUG = False
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-
+SECURE_SSL_REDIRECT = True
+USE_X_FORWARDED_HOST = True
 
 
 ALLOWED_HOSTS = ["trainifly.me", "www.trainifly.me", "localhost", "127.0.0.1"]
