@@ -488,6 +488,19 @@ body {
   margin-bottom: 10px;
 }
 
+.item-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.item-link:visited,
+.item-link:hover,
+.item-link:active {
+    text-decoration: none;
+    color: #333;
+}
+
 .error-box {
   max-width: 500px;
   margin: 100px auto;

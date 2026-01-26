@@ -1,0 +1,10 @@
+services:
+  web:
+    build: .
+    command: sh /code/scripts_docker/dev/run_web.sh
+    environment:
+      - ENVIRONMENT=development
+  nginx:
+    volumes:
+      - ./templates/portfolio:/usr/share/nginx/html
+      - ./nginx/dev/default.conf:/etc/nginx/conf.d/default.conf

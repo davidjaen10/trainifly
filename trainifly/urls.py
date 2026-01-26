@@ -49,6 +49,7 @@ urlpatterns = [
     path('inicio_admin/', viewcommon.AdminPortfolioView.as_view(), name="inicio_admin"),
     path('accounts/', include('allauth.urls')),
     path('login/', view = viewcommon.LoginView.as_view(), name='login'),
+    path('logout/', viewcommon.LogoutView.as_view(), name="logout"),
     path('api/', include(router.urls)),
 ]
 

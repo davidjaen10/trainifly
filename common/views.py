@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView, FormView, View
 from users.forms import UserLoginForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 from users.models import User
 
@@ -42,4 +42,9 @@ class LoginView(FormView):
         if user.is_staff or user.is_superuser:
             return redirect("inicio_admin")
         
+        return redirect("home")
+
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
         return redirect("home")

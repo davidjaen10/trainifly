@@ -2,8 +2,8 @@ version: '3'
 
 services:
   web:
-    build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: sh /code/scripts_docker/dev/run_web.sh
+    #command: python manage.py runserver 0.0.0.0:8000
     ports:
       - "81:8000"
     volumes:
@@ -16,6 +16,16 @@ services:
       - DB_PASSWORD=david
       - DB_HOST=db
       - DB_PORT=5432
+    
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./templates/portfolio:/usr/share/nginx/html
+      - ./nginx/dev/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - web
 
   db:
     image: postgres:15
