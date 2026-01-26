@@ -29,12 +29,20 @@ if not SECRET_KEY:
     raise Exception("SECRET_KEY no configurada")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 
-ALLOWED_HOSTS = []
 
+ALLOWED_HOSTS = ["trainifly.me", "www.trainifly.me", "localhost", "127.0.0.1"]
+CSRF_TRUSTED_ORIGINS = [
+    "https://trainifly.me",
+    "https://www.trainifly.me",
+]
 
 # Application definition
 #Aqui añadimos lo del crispy
