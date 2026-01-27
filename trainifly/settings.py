@@ -38,7 +38,7 @@ SECURE_SSL_REDIRECT = True
 USE_X_FORWARDED_HOST = True
 
 
-ALLOWED_HOSTS = ["trainifly.me", "www.trainifly.me", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["trainifly.me", "www.trainifly.me", "localhost", "127.0.0.1", "*"]
 CSRF_TRUSTED_ORIGINS = [
     "https://trainifly.me",
     "https://www.trainifly.me",

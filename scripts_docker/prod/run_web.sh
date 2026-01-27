@@ -1,9 +1,14 @@
 #!/bin/sh
-su -m django_user -c "python manage.py migrate"
 
-su -m django_user -c "python manage.py collectstatic --noinput"
+echo "Esperando a Postgres..."
 
-chmod -R 755 /code/staticfiles
+until pg_isready -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER"; do
+  sleep 2
+done
 
-exec su -m django_user -c "gunicorn --chdir /code/trainifly --bind 0.0.0.0:8000 trainifly.wsgi:application"
+echo "Postgres listo, aplicando migraciones..."
 
+python manage.py migrate
+python manage.py collectstatic --noinput
+
+exec gunicorn --chdir /code/trainifly --bind 0.0.0.0:8000 trainifly.wsgi:application
