@@ -9,7 +9,7 @@ class UserListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     pagination_class = paginador_user
     def get_queryset(self):
         return User.objects.all()
-    
+
 class UserCRUDView(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()

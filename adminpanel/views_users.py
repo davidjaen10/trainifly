@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from users.models import User
 from .forms import UserAdminForm
+from django.contrib.admin.views.decorators import staff_member_required
 
 def users_list(request):
     usuarios = User.objects.all()
@@ -19,7 +20,7 @@ def users_create(request):
 
     return render(request, 'adminpanel/users/form.html', {'form': form, 'modo': 'Crear'})
 
-
+@staff_member_required
 def users_edit(request, id):
     usuario = get_object_or_404(User, id=id)
 
@@ -34,6 +35,7 @@ def users_edit(request, id):
 
     return render(request, 'adminpanel/users/form.html', {'form': form, 'modo': 'Editar'})
 
+@staff_member_required
 def users_delete(request, id):
     usuario = get_object_or_404(User, id=id)
 
