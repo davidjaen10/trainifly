@@ -4,10 +4,12 @@ from users.models import User
 from .forms import UserAdminForm
 from django.contrib.admin.views.decorators import staff_member_required
 
+@staff_member_required
 def users_list(request):
     usuarios = User.objects.all()
     return render(request, 'adminpanel/users/list.html', {'usuarios': usuarios})
 
+@staff_member_required
 def users_create(request):
     if request.method == 'POST':
         form = UserAdminForm(request.POST)
