@@ -1,52 +1,11 @@
-# version: '3.8'
-
-# services:
-#   web:
-#     command: sh /code/scripts_docker/dev/run_web.sh
-#     #command: python manage.py runserver 0.0.0.0:8000
-#     ports:
-#       - "81:8000"
-#     volumes:
-#       - ./:/code
-#     depends_on:
-#       - db
-#     environment:
-#       - DB_NAME=davidBD
-#       - DB_USER=david
-#       - DB_PASSWORD=david
-#       - DB_HOST=db
-#       - DB_PORT=5432
-    
-#   nginx:
-#     image: nginx:alpine
-#     ports:
-#       - "80:80"
-#     volumes:
-#       - ./templates/portfolio:/usr/share/nginx/html
-#       - ./nginx/dev/default.conf:/etc/nginx/conf.d/default.conf
-#     depends_on:
-#       - web
-
-#   db:
-#     image: postgres:15
-#     environment:
-#       POSTGRES_DB: davidBD
-#       POSTGRES_USER: david
-#       POSTGRES_PASSWORD: david
-#     ports:
-#       - "5433:5432"
-#     volumes:
-#       - postgres_data:/var/lib/postgresql/data/
-
-# volumes:
-#   postgres_data:
-
 version: '3.8'
 
 services:
   web:
     ports:
       - "81:8000"
+    volumes:
+      - ./:/code
     depends_on:
       - db
     environment:
@@ -60,6 +19,9 @@ services:
     image: nginx:alpine
     ports:
       - "80:80"
+    #esto nuevo
+    volumes:
+      - ./nginx/dev/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - web
 

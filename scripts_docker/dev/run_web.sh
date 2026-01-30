@@ -1,4 +1,5 @@
 #!/bin/sh
-su -m django_user -c "python manage.py runserver 0.0.0.0:8000"
-su -m django_user -c "python manage.py makemigrations"
-su -m django_user -c "python manage.py migrate"
+export DJANGO_SETTINGS_MODULE=trainifly.settings
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver 0.0.0.0:8000

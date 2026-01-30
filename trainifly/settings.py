@@ -14,10 +14,8 @@ from pathlib import Path
 import os
 from .utils import get_secret
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -29,16 +27,23 @@ if not SECRET_KEY:
     raise Exception("SECRET_KEY no configurada")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
-USE_X_FORWARDED_HOST = True
+environment_variable = os.environ.get('ENVIRONMENT', '')
+if environment_variable == 'development':
+    DEBUG = True
+    ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = False
+if environment_variable == 'production':
+    DEBUG = False
+    ALLOWED_HOSTS = ["trainifly.me", "www.trainifly.me", "localhost", "127.0.0.1"]
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = True
+    USE_X_FORWARDED_HOST = True
 
 
-ALLOWED_HOSTS = ["trainifly.me", "www.trainifly.me", "localhost", "127.0.0.1"]
 CSRF_TRUSTED_ORIGINS = [
     "https://trainifly.me",
     "https://www.trainifly.me",
@@ -112,7 +117,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'trainifly.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
