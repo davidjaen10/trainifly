@@ -5,3 +5,5 @@ secrets/
 nginx/
 
 adminpanel/
+
+trainifly/urls.py
