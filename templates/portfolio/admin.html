@@ -1,4 +1,5 @@
 {% extends 'portfolio/base.html' %}
+{%  load static %}
 {% block header %}{% endblock %}
 {% block footer %}{% endblock %}
 {% block content %}
@@ -16,30 +17,15 @@
 
 <main class="content">
     <h1>Panel de Administración</h1>
-    <div class="grid">
-        <div class="item">
-            <i class="fas fa-user-plus"></i>
-            <p>Añadir Cliente</p>
-        </div>
-        <div class="item">
-            <i class="fas fa-users"></i>
-            <p>Lista de Clientes</p>
-        </div>
-        <div class="item">
-            <i class="fas fa-chart-line"></i>
-            <p>Estadísticas</p>
-        </div>
-         <div class="item">
-            <i class="fas fa-user-plus"></i>
-            <p>Añadir Clase</p>
-        </div>
-        <a href = "{% url 'admin_clases_list' %}" class="item-link">
-            <div class="item">
-                <i class="fas fa-users"></i>
-                <p>Lista de Clases</p>
-            </div>
-        </a>
-    </div>
+
+    <div id="admin-grid"></div>
 </main>
+
+<script>
+    const URL_CLIENTES = "{% url 'admin_clientes_list' %}";
+</script>
+
+<script src="{% static 'js/admin_panel.js' %}"></script>
+
 
 {% endblock %}

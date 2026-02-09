@@ -15,22 +15,20 @@
 </form>
 
 
-<div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 20px;">
+<div id="clases-list">
 
     {% if page_obj.object_list %}
         {% for horario in page_obj %}
-            <div style="border: 1px solid black; padding: 10px; width: 200px; border-radius: 5px;">
-                
-                <strong>{{ horario.tipo_clase.nombre|upper }}</strong><br><br>
-                
-                {{ horario.tipo_clase.descripcion }}<br><br>
-                
-                <em>{{ horario.get_dia_display }} - {{ horario.hora|time:"H:i" }}</em><br>
-                Capacidad: {{ horario.capacidad_max }}<br><br>
+            <div class="clase-item"
+                 data-nombre="{{ horario.tipo_clase.nombre }}"
+                 data-descripcion="{{ horario.tipo_clase.descripcion }}"
+                 data-dia="{{ horario.get_dia_display }}"
+                 data-hora="{{ horario.hora|time:'H:i' }}"
+                 data-capacidad="{{ horario.capacidad_max }}">
 
-                <button style="padding: 6px 10px; border-radius: 4px; border: 1px solid black; cursor: pointer;">
-                    Reservar Clase
-                </button>
+                <p>{{ horario.tipo_clase.nombre }}</p>
+                <p>{{ horario.get_dia_display }} - {{ horario.hora|time:"H:i" }}</p>
+
             </div>
         {% endfor %}
     {% else %}
@@ -38,6 +36,9 @@
     {% endif %}
 
 </div>
+
+<input type="text" id="filtroCliente" placeholder="Filtrar clases…" style="margin-top:15px;">
+
 
 
 {% if page_obj.paginator.num_pages > 1 %}
@@ -59,3 +60,5 @@
 
 </div>
 {% endif %}
+<script src="{% static 'js/clases.js' %}"></script>
+

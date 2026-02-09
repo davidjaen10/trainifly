@@ -1,7 +1,9 @@
 from django import forms
 from django.urls import reverse_lazy
 from django.contrib.auth import login
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView, DeleteView
+from django.contrib.admin.views.decorators import staff_member_required
+from django.utils.decorators import method_decorator
 
 from .models import User
 
@@ -45,3 +47,16 @@ class UserCreateView(CreateView):
         
         login(self.request, user,  backend="django.contrib.auth.backends.ModelBackend")
         return super().form_valid(form)
+    
+@method_decorator(staff_member_required, name='dispatch')
+class UserUpdateView(UpdateView):
+    model = User
+    fields = ['nombre', 'email', 'usuario', 'plan']
+    template_name = "users/user_form.html"
+    success_url = reverse_lazy('admin_clientes_list')
+
+@method_decorator(staff_member_required, name='dispatch')
+class UserDeleteView(DeleteView):
+    model = User
+    template_name = "adminpanel/users/confirm_delete.html"
+    success_url = reverse_lazy("admin_clientes_list")
