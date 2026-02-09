@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const gridDiv = document.createElement("div");
     gridDiv.className = "grid";
 
-    // BOTÓN CREAR CLIENTE
+    // boton de crear client
     const linkCreate = document.createElement("a");
     linkCreate.href = "/create_user/";
     linkCreate.className = "item-link";
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
     linkCreate.appendChild(cardCreate);
     gridDiv.appendChild(linkCreate);
 
-    // 🔹 BOTÓN LISTA DE CLIENTES
+    //boton de lista clientes
     const linkList = document.createElement("a");
     linkList.href = URL_CLIENTES;
     linkList.className = "item-link";
