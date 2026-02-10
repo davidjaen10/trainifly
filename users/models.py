@@ -38,6 +38,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         ("elite", "Plan Élite - 60€/mes"),
     ]
 
+    username = None
     nombre = models.CharField(max_length=70)
     usuario = models.CharField(max_length=50, unique=True)
     email = models.EmailField(unique=True)
