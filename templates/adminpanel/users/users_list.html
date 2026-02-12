@@ -1,0 +1,28 @@
+{% load static %}
+
+<h2>Listado de Clientes</h2>
+
+<a href="{% url 'inicio_admin' %}">
+  <button> Volver al panel</button>
+</a>
+
+<input type="text" id="filtroClientes" placeholder="Filtrar clientes por nombre">
+
+<div id="clientes-list">
+  {% for c in clientes %}
+    <div class="cliente-item"
+         data-id="{{ c.id }}"
+         data-nombre="{{ c.nombre }}"
+         data-email="{{ c.email }}"
+         data-usuario="{{ c.usuario }}"
+         data-plan="{{ c.plan }}">
+      <p>{{ c.nombre }}</p>
+      <p>{{ c.email }}</p>
+      <p>{{ c.usuario }}</p>
+      <p>{{ c.plan }}</p>
+    </div>
+  {% endfor %}
+</div>
+
+
+<script src="{% static 'js/clientes.js' %}"></script>
