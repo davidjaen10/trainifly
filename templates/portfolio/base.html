@@ -4,28 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TrainiFly - Gimnasio</title>
+
     {% load static %}
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
+
 <body>
-    <div class="contenedor">
-        {% block header %}
-        {% include "portfolio/header.html" %}
-        {% endblock header %}   
-    </div>
 
+    {% include "portfolio/header.html" %}
 
-    <div class='contenedor'>
+    <main class="main-content">
         {% block content %}
         {% endblock content %}
-    </div>
+    </main>
 
-    <div>
-        {% block footer %}
+    {% block footer %}
         {% include "portfolio/footer.html" %}
-        {% endblock footer %}
-    </div>
+    {% endblock %}
+
 
 </body>
+
 </html>

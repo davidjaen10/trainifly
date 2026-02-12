@@ -7,10 +7,24 @@
   font-family: Arial, sans-serif;
 }
 
+
+html, body {
+    padding: 0;
+    margin: 0;
+}
+
 body {
   background: #f4f4f4;
   color: #222;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
+
+.main-content {
+    flex: 1;
+}
+
 
 .public-header {
   background: #000;
@@ -19,7 +33,10 @@ body {
   top: 0;
   z-index: 999;
   box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  backdrop-filter: blur(6px);
+  border-bottom: 3px solid #ffb13d;
 }
+
 
 .container-header {
   max-width: 1200px;
@@ -659,6 +676,75 @@ body {
     background-color: #474747;
     transition: 0.5s;
 }
+
+.titulo-panel {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 28px;
+}
+
+.panel-opciones {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin: 60px auto;
+    flex-wrap: wrap;
+    max-width: 900px;
+}
+
+.panel-card {
+    width: 340px;
+    min-height: 200px;
+    background: linear-gradient(145deg, #111, #1b1b1b);
+    color: white;
+    text-decoration: none;
+    border-radius: 18px;
+    padding: 30px;
+    transition: 0.25s;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+    position: relative;
+    overflow: hidden;
+}
+
+.panel-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent, rgba(255,177,61,0.25), transparent);
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.panel-card:hover::before {
+    opacity: 1;
+}
+
+.panel-card:hover {
+    transform: scale(1.05);
+    background-color: #1d1d1d;
+}
+
+.panel-card h3 {
+    color: #ffb13d;
+    margin-bottom: 12px;
+    font-size: 20px;
+}
+
+.panel-card p {
+    color: #ccc;
+    font-size: 14px;
+}
+
+#filtroClientes {
+    display: block;
+    margin: 20px;
+}
+
+#clientes-list {
+    margin-bottom: 150px;
+}
+
+
 
 @media(max-width: 900px) {
   .container {

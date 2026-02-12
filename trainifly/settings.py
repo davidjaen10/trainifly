@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'rest_framework',
+    'schedule',
 ]
 
 SITE_ID = 1

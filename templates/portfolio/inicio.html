@@ -1,0 +1,22 @@
+{% extends "portfolio/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h2 class="titulo-panel">Panel de Usuario</h2>
+
+<div class="panel-opciones">
+
+    <a href="{% url 'calendario_usuario' %}" class="panel-card">
+        <h3> Inscribirse en clases</h3>
+        <p>Reserva plaza en tus actividades favoritas</p>
+    </a>
+
+    <a href="{% url 'mis_clases' %}" class="panel-card">
+        <h3> Mis clases</h3>
+        <p>Consulta tus reservas activas</p>
+    </a>
+
+</div>
+
+{% endblock %}

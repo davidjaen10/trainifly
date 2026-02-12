@@ -23,7 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
             <th>Acciones</th>
         </tr>
     `;
-
     const tbody = document.createElement("tbody");
 
     items.forEach(item => {
@@ -43,7 +42,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 </a>
             </td>
         `;
-
         tbody.appendChild(tr);
     });
 
@@ -55,7 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // filtrar por nombre
     const filtro = document.getElementById("filtroClientes");
-
     if (filtro) {
         filtro.addEventListener("input", e => {
             const texto = e.target.value.toLowerCase();
@@ -66,5 +63,4 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     }
-
 });
