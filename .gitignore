@@ -4,6 +4,6 @@ secrets/
 
 nginx/
 
-adminpanel/
+/adminpanel/
 
 trainifly/urls.py
