@@ -4,20 +4,8 @@
 {% block footer %}{% endblock %}
 {% block content %}
 
-<header class="admin-header">
-    <div class="logo">TrainiFly Admin</div>
-
-    <nav class="admin-nav">
-        <a class="active" href="{% url 'inicio_admin' %}"><i class="fas fa-home"></i> Inicio</a>
-        <a href="#"><i class="fas fa-chart-line"></i> Estadísticas</a>
-        <a href="#"><i class="fas fa-gear"></i> Ajustes</a>
-    </nav>
-    <a href="{% url 'logout' %}" class="logout"><i class="fas fa-sign-out-alt"></i></a>
-</header>
-
 <main class="content">
     <h1>Panel de Administración</h1>
-
     <div id="admin-grid"></div>
 </main>
 

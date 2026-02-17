@@ -1,11 +1,45 @@
-{% extends "portfolio/base.html" %}
+{% load scheduletags %}
+{% load static %}
 
-{% block content %}
+<link rel="stylesheet" href="{% static 'css/schedule.css' %}">
 
-<h2>Calendario de clases</h2>
+<h2 class="titulo-panel">Calendario de Clases</h2>
 
-<p>YA estamos dentro del calendario</p>
+<div class="filtros-clases">
 
-<a href="{% url 'inicio' %}">← Volver al panel</a>
+    <a href="{% url 'calendario_usuario' %}"
+       class="filtro-btn {% if not tipo_activo %}activo{% endif %}">
+        Todas
+    </a>
 
-{% endblock %}
+    {% for tipo in tipos %}
+        <a href="{% url 'calendario_usuario' %}?tipo={{ tipo.id }}"
+           class="filtro-btn {% if tipo_activo == tipo.id|stringformat:'s' %}activo{% endif %}">
+            {{ tipo.nombre }}
+        </a>
+    {% endfor %}
+
+</div>
+
+<div class="calendar-wrapper-custom">
+    <div class="calendar-box">
+
+        <div class="calendar-header">
+
+            <!-- Mes anterior SOLO si no es pasado -->
+            {% if period.start.month > now.month or period.start.year > now.year %}
+                <a href="?month={{ period.start.month|add:'-1' }}&year={{ period.start.year }}"
+                   class="nav-arrow">◀</a>
+            {% endif %}
+
+            <h2>{{ period.start|date:"F Y" }}</h2>
+
+            <a href="?month={{ period.start.month|add:'1' }}&year={{ period.start.year }}"
+               class="nav-arrow">▶</a>
+
+        </div>
+
+        {% month_table calendar period "big" %}
+
+    </div>
+</div>

@@ -297,7 +297,7 @@ body {
 .hero {
   position: relative;
   height: 85vh;
-  background: url('../img/gym.png') center/cover no-repeat;
+  background: url('../img/gym.webp') center/cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -744,6 +744,42 @@ body {
     margin-bottom: 150px;
 }
 
+/*Calendario*/
+
+.filtros-clases {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin: 25px 0;
+    flex-wrap: wrap;
+}
+
+.filtro-btn {
+    padding: 8px 14px;
+    background: #111;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.filtro-btn:hover {
+    background: #222;
+}
+
+.filtro-btn.activo {
+    background: orange;
+    color: black;
+}
+
+.calendar-frame {
+    width: 100%;
+    height: 700px;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
 
 
 @media(max-width: 900px) {

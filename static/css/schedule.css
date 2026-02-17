@@ -1,0 +1,197 @@
+/* ===== WRAPPER GENERAL ===== */
+.calendar-wrapper-custom {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+/* ===== CAJA BLANCA ===== */
+
+.calendar-box {
+    width: 100%;
+    max-width: 1100px;
+    background: white;
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* ===== TABLA DEL CALENDARIO ===== */
+
+.calendar-box table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    background: white;
+}
+
+/* ===== CABECERA (DÍAS) ===== */
+
+.calendar-box thead th {
+    background: #111;
+    color: white;
+    padding: 10px 0;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid #111;
+}
+
+/* ===== FILAS ===== */
+
+.calendar-box tbody tr {
+    height: 75px;
+}
+
+/* ===== CELDAS ===== */
+
+.calendar-box td {
+    border: 1px solid #eee;
+    vertical-align: top;
+    padding: 20px 6px 6px 6px;
+    background: #fafafa;
+    transition: background 0.15s ease;
+    position: relative;
+}
+
+.calendar-box td:hover {
+    background: #f2f2f2;
+}
+
+/* ===== DÍAS VACÍOS ===== */
+
+.calendar-box td.noday {
+    background: #f5f5f5;
+}
+
+/* ===== DÍA ACTUAL ===== */
+
+.calendar-box td.today {
+    background: #fff3cd;
+    border: 1px solid #ffb13d;
+}
+
+/* ===== NÚMERO DEL DÍA ===== */
+
+.calendar-box .date {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #888;
+}
+
+/* ===== EVENTOS ===== */
+
+.calendar-box .events {
+    margin: 0;
+    padding: 0;
+}
+
+/* Evento compacto */
+.calendar-box .event-clean {
+    background: #ff9f2f;
+    color: white;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 5px;
+    margin-bottom: 3px;
+    display: inline-block;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* Hover suave */
+.calendar-box .event-clean:hover {
+    transform: scale(1.05);
+}
+
+/* ===== HEADER DEL MES ===== */
+
+.calendar-header {
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.calendar-header h2 {
+    margin: 0;
+    font-size: 22px;
+    color: #111;
+}
+
+/* ===================================================== */
+/* 🔥 OCULTAR COLUMNAS CORRECTAMENTE EN DJANGO-SCHEDULE */
+/* ===================================================== */
+
+/* Columna semana */
+.calendar-box table tr > *:nth-child(1) {
+    display: none;
+}
+
+/* Domingo */
+.calendar-box table tr > *:nth-child(2) {
+    display: none;
+}
+
+/* Sábado */
+.calendar-box table tr > *:nth-child(8) {
+    display: none;
+}
+
+/* ===== IFRAME (si lo usas en otras vistas) ===== */
+
+.calendar-frame {
+    width: 100%;
+    max-width: 1100px;
+    height: 750px;
+    border: none;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.filtros-clases {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.filtro-btn {
+    display: inline-block;
+    padding: 8px 14px;
+    margin: 4px;
+    border-radius: 8px;
+    background: #111;
+    color: white;
+    font-size: 13px;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.filtro-btn:hover {
+    background: #ff9f2f;
+    color: white;
+}
+
+.filtro-btn.activo {
+    background: #ff9f2f;
+}
+
+
+/* ===== RESPONSIVE ===== */
+
+@media(max-width: 768px) {
+
+    .calendar-box tbody tr {
+        height: 60px;
+    }
+
+    .calendar-box .event-clean {
+        font-size: 9px;
+        padding: 2px 4px;
+    }
+
+    .calendar-box thead th {
+        font-size: 11px;
+        padding: 8px 0;
+    }
+}

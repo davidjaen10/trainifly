@@ -189,6 +189,10 @@ EMAIL_HOST_USER = 'djaenpardo@gmail.com'
 EMAIL_HOST_PASSWORD = 'twyt arov gzfh ttsj'
 EMAIL_USE_TLS = True
 
+#CALENDARIO
+X_FRAME_OPTIONS = "SAMEORIGIN"
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
