@@ -9,6 +9,7 @@
         <option value="J" {% if dia == 'J' %}selected{% endif %}>Jueves</option>
         <option value="V" {% if dia == 'V' %}selected{% endif %}>Viernes</option>
         <option value="S" {% if dia == 'S' %}selected{% endif %}>Sábado</option>
+        <option value="D" {% if dia == 'D' %}selected{% endif %}>Domingo</option>
     </select>
     <button type="submit">Buscar</button>
 </form>
@@ -17,11 +18,16 @@
 <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 20px;">
 
     {% if page_obj.object_list %}
-        {% for clase in page_obj %}
-            <div style="border: 1px solid black; padding: 10px; width: 180px; border-radius: 5px;">
-                <strong>{{ clase.clase|upper }}</strong><br><br>
-                {{ clase.descripcion }}<br><br>
-                <em>{{ clase.dia }} - {{ clase.hora }}</em><br><br>
+        {% for horario in page_obj %}
+            <div style="border: 1px solid black; padding: 10px; width: 200px; border-radius: 5px;">
+                
+                <strong>{{ horario.tipo_clase.nombre|upper }}</strong><br><br>
+                
+                {{ horario.tipo_clase.descripcion }}<br><br>
+                
+                <em>{{ horario.get_dia_display }} - {{ horario.hora|time:"H:i" }}</em><br>
+                Capacidad: {{ horario.capacidad_max }}<br><br>
+
                 <button style="padding: 6px 10px; border-radius: 4px; border: 1px solid black; cursor: pointer;">
                     Reservar Clase
                 </button>

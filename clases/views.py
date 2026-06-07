@@ -1,27 +1,29 @@
 from django.urls import reverse_lazy
-from django.shortcuts import render
-from django.views.generic import TemplateView, CreateView, UpdateView, ListView
-from .models import Clase
+from django.views.generic import CreateView, UpdateView, ListView
+from .models import TipoClase, HorarioClase
 
-class UserCreateView(CreateView):
-    model = Clase
-    fields = ['clase', "descripcion"]
+
+class TipoClaseCreateView(CreateView):
+    model = TipoClase
+    fields = ['nombre', 'descripcion']
     success_url = reverse_lazy('home')
 
-class UserUpdateView(UpdateView):
-    model = Clase
-    fields = ['clase', 'descripcion']
+
+class TipoClaseUpdateView(UpdateView):
+    model = TipoClase
+    fields = ['nombre', 'descripcion']
     success_url = reverse_lazy('home')
 
-class clasesListView(ListView):
+
+class ClasesListView(ListView):
     paginate_by = 10
-    model = Clase
+    model = HorarioClase
     template_name = "clases/clase_list.html"
-    context_object_name = 'clases'
+    context_object_name = 'horarios'
 
     def get_queryset(self):
         dia = self.request.GET.get('dia', '')
-        qs = Clase.objects.all().order_by('dia', 'hora')
+        qs = HorarioClase.objects.select_related('tipo_clase').order_by('dia', 'hora')
         if dia:
             qs = qs.filter(dia=dia)
         return qs
