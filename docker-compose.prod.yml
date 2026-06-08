@@ -24,22 +24,24 @@ services:
     environment:
       ENVIRONMENT: production
       STATIC: "yes"
+
       DB_NAME: davidBD
       DB_USER: david
       DB_PASSWORD: david
       DB_HOST: db
       DB_PORT: 5432
-      EMAIL_BACKEND: django.core.mail.backends.smtp.EmailBackend
-      EMAIL_HOST: smtp.gmail.com
-      EMAIL_PORT: 587
-      EMAIL_USE_TLS: "True"
-      EMAIL_HOST_USER: djaenpardo@gmail.com
-      EMAIL_HOST_PASSWORD: ijyc saqy xkcz uaei
-      DEFAULT_FROM_EMAIL: djaenpardo@gmail.com
+
+      # 🔥 SENDGRID (CORRECTO)
+      EMAIL_BACKEND: sendgrid_backend.SendgridBackend
+      SENDGRID_API_KEY: tu_api_key_aqui
+      DEFAULT_FROM_EMAIL: no-reply@trainifly.me
+
     secrets:
       - SECRET_KEY
+
     volumes:
       - static_volume:/code/staticfiles
+
     deploy:
       restart_policy:
         condition: any

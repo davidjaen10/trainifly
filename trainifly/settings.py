@@ -199,7 +199,8 @@ EMAIL_PORT = 587
 
 EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = "djaenpardo@gmail.com"
-EMAIL_HOST_PASSWORD = "ijyc saqy xkcz uaei"
+EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
 
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
+
+DEFAULT_FROM_EMAIL = "no-reply@trainifly.me"
