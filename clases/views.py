@@ -2,12 +2,15 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, ListView
 from .models import TipoClase, HorarioClase, ReservaClase
 from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.views.generic import TemplateView
 from django.views import View
 from schedule.periods import Month
 from schedule.models import Calendar, Event
 from datetime import datetime, timedelta, date
+from django.core.mail import send_mail
+from django.conf import settings
 
 class TipoClaseCreateView(CreateView):
     model = TipoClase
@@ -94,6 +97,7 @@ class CalendarioView(TemplateView):
 
         year = self.request.GET.get("year")
         month = self.request.GET.get("month")
+        tipo_id = self.request.GET.get("tipo")
 
         if year and month:
             year = int(year)
@@ -102,19 +106,42 @@ class CalendarioView(TemplateView):
             year = today.year
             month = today.month
 
+        eventos = list(calendario.events.all())
+
+        if tipo_id:
+
+            horarios_ids = list(
+                HorarioClase.objects.filter(
+                    tipo_clase_id=tipo_id
+                ).values_list("id", flat=True)
+            )
+
+            eventos = [
+                evento
+                for evento in eventos
+                if (
+                    evento.description.startswith("horario:")
+                    and int(
+                        evento.description.replace("horario:", "")
+                    ) in horarios_ids
+                )
+            ]
+
         period = Month(
-            calendario.events.all(),
+            eventos,
             date(year, month, 1)
         )
-
-        tipo_id = self.request.GET.get("tipo")
 
         context["calendar"] = calendario
         context["period"] = period
         context["tipos"] = TipoClase.objects.all()
         context["tipo_activo"] = tipo_id
         context["now"] = today
-        context["eventos"] = calendario.events.order_by("start")[:20]
+
+        context["eventos"] = sorted(
+            eventos,
+            key=lambda e: e.start
+        )[:20]
 
         ocupacion = {}
         capacidades = {}
@@ -178,12 +205,50 @@ class MisClasesView(TemplateView):
 
 class ReservarClaseView(View):
     def get(self, request, event_id):
-        evento = Event.objects.get(id=event_id)
-        ReservaClase.objects.get_or_create(
+
+        evento = get_object_or_404(Event, id=event_id)
+
+        # 🔴 CONTROL DE AFORO
+        if evento.description.startswith("horario:"):
+
+            horario_id = int(
+                evento.description.replace("horario:", "")
+            )
+
+            horario = HorarioClase.objects.get(id=horario_id)
+
+            plazas_ocupadas = evento.reservas.count()
+
+            if plazas_ocupadas >= horario.capacidad_max:
+                return redirect("calendario_usuario")
+
+        # 🔵 CREAR RESERVA
+        reserva, created = ReservaClase.objects.get_or_create(
             usuario=request.user,
             evento=evento
         )
-        return redirect("mis_clases")
+
+        # 📧 EMAIL SOLO SI ES NUEVA RESERVA
+        if created and request.user.email:
+
+            send_mail(
+                subject="Reserva confirmada - TrainiFly",
+                message=f"""
+                    Hola {request.user.username},
+
+                    Tu reserva ha sido confirmada:
+
+                    Clase: {evento.title}
+                    Hora: {evento.start}
+
+                    ¡Te esperamos!
+                    """,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[request.user.email],
+                fail_silently=False,
+            )
+
+        return redirect("calendario_usuario")
     
 class CancelarReservaView(View):
     def get(self, request, reserva_id):

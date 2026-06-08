@@ -33,14 +33,14 @@
 
             <!-- Mes anterior SOLO si no es pasado -->
             {% if period.start.month > now.month or period.start.year > now.year %}
-                <a href="?month={{ period.start.month|add:'-1' }}&year={{ period.start.year }}"
-                   class="nav-arrow">◀</a>
+                <a href="?month={{ period.start.month|add:'-1' }}&year={{ period.start.year }}{% if tipo_activo %}&tipo={{ tipo_activo }}{% endif %}"
+                class="nav-arrow">◀</a>
             {% endif %}
 
             <h2>{{ period.start|date:"F Y" }}</h2>
 
             {% if period.start.month < mes_siguiente.month or period.start.year < mes_siguiente.year %}
-                <a href="?month={{ period.start.month|add:'1' }}&year={{ period.start.year }}"
+                <a href="?month={{ period.start.month|add:'1' }}&year={{ period.start.year }}{% if tipo_activo %}&tipo={{ tipo_activo }}{% endif %}"
                 class="nav-arrow">▶</a>
             {% endif %}
 

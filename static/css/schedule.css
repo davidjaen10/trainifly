@@ -1,4 +1,5 @@
 /* ===== WRAPPER GENERAL ===== */
+
 .calendar-wrapper-custom {
     display: flex;
     justify-content: center;
@@ -9,10 +10,10 @@
 
 .calendar-box {
     width: 100%;
-    max-width: 1100px;
+    max-width: 900px; /* antes 1100 */
     background: white;
     border-radius: 14px;
-    padding: 18px;
+    padding: 15px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
@@ -30,8 +31,8 @@
 .calendar-box thead th {
     background: #111;
     color: white;
-    padding: 10px 0;
-    font-size: 13px;
+    padding: 8px 0;
+    font-size: 12px;
     font-weight: 600;
     border: 1px solid #111;
 }
@@ -39,7 +40,7 @@
 /* ===== FILAS ===== */
 
 .calendar-box tbody tr {
-    height: 75px;
+    height: 60px;
 }
 
 /* ===== CELDAS ===== */
@@ -47,9 +48,9 @@
 .calendar-box td {
     border: 1px solid #eee;
     vertical-align: top;
-    padding: 20px 6px 6px 6px;
+    padding: 18px 4px 4px 4px;
     background: #fafafa;
-    transition: background 0.15s ease;
+    transition: background .15s ease;
     position: relative;
 }
 
@@ -74,9 +75,9 @@
 
 .calendar-box .date {
     position: absolute;
-    top: 6px;
-    right: 8px;
-    font-size: 12px;
+    top: 4px;
+    right: 6px;
+    font-size: 11px;
     font-weight: 600;
     color: #888;
 }
@@ -88,7 +89,6 @@
     padding: 0;
 }
 
-/* Evento compacto */
 .calendar-box .event-clean {
     background: #ff9f2f;
     color: white;
@@ -101,48 +101,38 @@
     white-space: nowrap;
 }
 
-/* Hover suave */
-.calendar-box .event-clean:hover {
-    transform: scale(1.05);
-}
-
 /* ===== HEADER DEL MES ===== */
 
 .calendar-header {
     text-align: center;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 .calendar-header h2 {
     margin: 0;
-    font-size: 22px;
+    font-size: 20px;
     color: #111;
 }
 
-/* ===================================================== */
-/* 🔥 OCULTAR COLUMNAS CORRECTAMENTE EN DJANGO-SCHEDULE */
-/* ===================================================== */
+/* ===== OCULTAR SEMANA, SÁBADO Y DOMINGO ===== */
 
-/* Columna semana */
 .calendar-box table tr > *:nth-child(1) {
     display: none;
 }
 
-/* Domingo */
 .calendar-box table tr > *:nth-child(2) {
     display: none;
 }
 
-/* Sábado */
 .calendar-box table tr > *:nth-child(8) {
     display: none;
 }
 
-/* ===== IFRAME (si lo usas en otras vistas) ===== */
+/* ===== IFRAME ===== */
 
 .calendar-frame {
     width: 100%;
-    max-width: 1100px;
+    max-width: 900px;
     height: 750px;
     border: none;
     border-radius: 12px;
@@ -150,21 +140,24 @@
     box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
+/* ===== FILTROS ===== */
+
 .filtros-clases {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .filtro-btn {
     display: inline-block;
-    padding: 8px 14px;
-    margin: 4px;
+    padding: 7px 12px;
+    margin: 3px;
     border-radius: 8px;
     background: #111;
     color: white;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
-    transition: 0.2s;
+    text-decoration: none;
+    transition: .2s;
 }
 
 .filtro-btn:hover {
@@ -176,50 +169,129 @@
     background: #ff9f2f;
 }
 
-.event-clean{
-    background:#ff9f2d;
-    color:white;
-    padding:6px;
-    margin-top:4px;
-    border-radius:6px;
-    font-size:12px;
-    text-align:center;
+/* ===== VOLVER ===== */
+
+.volver-container {
+    margin: 10px 0 20px;
 }
 
-.volver-container{
-    margin: 15px 0 25px;
-}
-
-.volver-btn{
+.volver-btn {
     display: inline-block;
     background: #0a0a0a;
     color: white;
     text-decoration: none;
-    padding: 10px 18px;
+    padding: 8px 16px;
     border-radius: 8px;
     font-weight: 600;
     transition: .2s;
 }
 
-.volver-btn:hover{
+.volver-btn:hover {
     transform: translateY(-2px);
+}
+
+/* ===== TARJETAS DE CLASE ===== */
+
+.btn.btn-primary.btn-lg,
+.btn-secondary.btn-lg {
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 6px;
+    text-align: center;
+    border-radius: 10px;
+    border: 1px solid #444;
+    background: #2b2b2b;
+    color: white;
+    box-sizing: border-box;
+}
+
+.btn.btn-primary.btn-lg {
+    cursor: pointer;
+    transition: all .25s ease;
+}
+
+.btn.btn-primary.btn-lg:hover {
+    background: #000;
+    border-color: #666;
+    transform: translateY(-2px);
+}
+
+.btn-secondary.btn-lg {
+    cursor: default;
+    background: #3a3a3a;
+    border-color: #555;
+}
+
+/* ===== TEXTO INTERIOR ===== */
+
+.starttime {
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 2px;
+    color: white;
+}
+
+.event-title {
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 2px;
+    color: white;
+}
+
+.event-capacity {
+    font-size: 11px;
+    color: #cfcfcf;
+}
+
+.event-status {
+    margin-top: 4px;
+    font-size: 11px;
+    font-weight: bold;
+    color: #7CFC00;
+}
+.btn-danger.btn-lg{
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 6px;
+    text-align: center;
+    border-radius: 10px;
+    background: #8b1e1e;
+    border: 1px solid #b22222;
+    color: white;
+    cursor: not-allowed;
+}
+
+/* ===== DESACTIVAR CLICK EN NÚMERO DEL DÍA ===== */
+
+a[href*="/schedule/calendar/daily/"] {
+    pointer-events: none;
+    cursor: default;
+    text-decoration: none;
+    color: inherit;
 }
 
 /* ===== RESPONSIVE ===== */
 
-@media(max-width: 768px) {
+@media (max-width: 768px) {
 
-    .calendar-box tbody tr {
-        height: 60px;
+    .calendar-box {
+        max-width: 100%;
     }
 
-    .calendar-box .event-clean {
-        font-size: 9px;
-        padding: 2px 4px;
+    .calendar-box tbody tr {
+        height: 55px;
     }
 
     .calendar-box thead th {
+        font-size: 10px;
+        padding: 6px 0;
+    }
+
+    .starttime {
+        font-size: 10px;
+    }
+
+    .event-title {
         font-size: 11px;
-        padding: 8px 0;
     }
 }
