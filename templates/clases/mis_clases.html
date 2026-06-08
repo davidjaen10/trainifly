@@ -1,0 +1,25 @@
+<h2>Mis clases reservadas</h2>
+
+{% if reservas %}
+
+    {% for reserva in reservas %}
+        <div class="reserva">
+            <h3>{{ reserva.evento.title }}</h3>
+
+            <p>
+                {{ reserva.evento.start|date:"d/m/Y" }}
+            </p>
+
+            <p>
+                {{ reserva.evento.start|time:"H:i" }}
+            </p>
+        </div>
+
+        <hr>
+    {% endfor %}
+
+{% else %}
+
+    <p>No tienes clases reservadas.</p>
+
+{% endif %}

@@ -1,0 +1,16 @@
+{% load scheduletags %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/schedule.css' %}">
+
+<div class="calendar-wrapper-custom">
+    <div class="calendar-box">
+
+        <div class="calendar-header">
+            <h2>{{ period.start|date:"F Y" }}</h2>
+        </div>
+
+        {% month_table calendar period "big" %}
+
+    </div>
+</div>

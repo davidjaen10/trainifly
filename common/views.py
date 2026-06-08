@@ -8,6 +8,9 @@ from users.models import User
 class HomeView(TemplateView):
     template_name = 'portfolio/home.html'
 
+class InicioView(TemplateView):
+    template_name = "portfolio/inicio.html"
+
 class AdminPortfolioView(TemplateView):
     template_name = "portfolio/admin.html"
 
@@ -42,7 +45,7 @@ class LoginView(FormView):
         if user.is_staff or user.is_superuser:
             return redirect("inicio_admin")
         
-        return redirect("home")
+        return redirect("inicio")
 
 class LogoutView(View):
     def get(self, request):

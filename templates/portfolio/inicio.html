@@ -1,0 +1,52 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/inicio.css' %}">
+
+<h1>Panel de Usuario</h1>
+
+<div class="user-card">
+    <h2>{{ request.user.nombre }}</h2>
+    <p>{{ request.user.email }}</p>
+    <p><strong>{{ request.user.get_plan_display }}</strong></p>
+</div>
+
+<hr>
+
+<div class="acciones">
+
+    <div class="accion">
+        <a href="/calendario/">
+            <h3>Reservar clases</h3>
+        </a>
+    </div>
+
+    <div class="accion">
+        <a href="/mis-clases/">
+            <h3>Mis clases reservadas</h3>
+        </a>
+    </div>
+
+    <div class="accion">
+        <a href="#">
+            <h3>Cambiar plan</h3>
+        </a>
+    </div>
+    <div class="accion">
+        <a href="#">
+            <h3>Dar de baja suscripción</h3>
+        </a>
+    </div>
+    {% if request.user.plan == "premium" or request.user.plan == "elite" %}
+        <div class="accion">
+            <a href="#">
+                Invitar a un amigo
+            </a>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

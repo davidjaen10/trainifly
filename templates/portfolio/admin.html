@@ -1,45 +1,68 @@
 {% extends 'portfolio/base.html' %}
+
 {% block header %}{% endblock %}
 {% block footer %}{% endblock %}
+
 {% block content %}
 
 <header class="admin-header">
     <div class="logo">TrainiFly Admin</div>
 
     <nav class="admin-nav">
-        <a class="active" href="{% url 'inicio_admin' %}"><i class="fas fa-home"></i> Inicio</a>
-        <a href="#"><i class="fas fa-chart-line"></i> Estadísticas</a>
-        <a href="#"><i class="fas fa-gear"></i> Ajustes</a>
+        <a href="{% url 'logout' %}" class="logout">
+            <i class="fas fa-sign-out-alt">&nbsp;&nbsp;&nbsp;Salir</i>
+        </a>
     </nav>
-    <a href="{% url 'logout' %}" class="logout"><i class="fas fa-sign-out-alt"></i></a>
 </header>
 
-<main class="content">
+<main class="content admin-page">
+
     <h1>Panel de Administración</h1>
-    <div class="grid">
-        <div class="item">
-            <i class="fas fa-user-plus"></i>
-            <p>Añadir Cliente</p>
+
+    <div class="admin-profile-card">
+
+        <div class="admin-profile-icon">
+            <i class="fas fa-user-shield"></i>
         </div>
-        <div class="item">
-            <i class="fas fa-users"></i>
-            <p>Lista de Clientes</p>
+
+        <div class="admin-profile-info">
+            <h2>{{ request.user.nombre }}</h2>
+
+            <p>
+                <i class="fas fa-user"></i>
+                {{ request.user.usuario }}
+            </p>
+
+            <p>
+                <i class="fas fa-envelope"></i>
+                {{ request.user.email }}
+            </p>
+
+            <p>
+                <i class="fas fa-crown"></i>
+                Administrador
+            </p>
         </div>
-        <div class="item">
-            <i class="fas fa-chart-line"></i>
-            <p>Estadísticas</p>
-        </div>
-         <div class="item">
-            <i class="fas fa-user-plus"></i>
-            <p>Añadir Clase</p>
-        </div>
-        <a href = "{% url 'admin_clases_list' %}" class="item-link">
-            <div class="item">
+    </div>
+
+    <div class="grid admin-grid">
+
+        <a href="{% url 'admin_users_list' %}" class="item-link">
+            <div class="item admin-item">
                 <i class="fas fa-users"></i>
+                <p>Lista de Clientes</p>
+            </div>
+        </a>
+
+        <a href="{% url 'admin_clases_list' %}" class="item-link">
+            <div class="item admin-item">
+                <i class="fas fa-dumbbell"></i>
                 <p>Lista de Clases</p>
             </div>
         </a>
+
     </div>
+
 </main>
 
 {% endblock %}

@@ -1,0 +1,18 @@
+{% load scheduletags %}
+
+<td class="day {% if today %}today{% endif %}">
+
+    <div class="date">
+        {{ day.day }}
+    </div>
+
+    {% if occurrences %}
+        {% for occurrence in occurrences %}
+            <div class="event-clean">
+                <strong>{{ occurrence.start|time:"H:i" }}</strong><br>
+                {{ occurrence.title }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+</td>

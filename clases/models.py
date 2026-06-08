@@ -1,25 +1,6 @@
-# from django.db import models
-# from datetime import datetime
-
-# DIAS_SEMANA = [
-#     ('L', 'Lunes'),
-#     ('M', 'Martes'),
-#     ('X', 'Miércoles'),
-#     ('J', 'Jueves'),
-#     ('V', 'Viernes'),
-#     ('S', 'Sábado'),
-#     ('D', 'Domingo'),
-# ]
-
-# class Clase(models.Model):
-#     clase = models.CharField(max_length=70, verbose_name="clase", null=False, blank=False)
-#     descripcion = models.CharField(max_length=70, verbose_name="descripcion", null=False, blank=False)
-#     dia = models.CharField(max_length=1, choices=DIAS_SEMANA, default = "L")
-#     hora = models.TimeField(default =datetime.now )
-#     capacidad_max = models.IntegerField(verbose_name="capacidad_max", default="0")
-
 from django.db import models
-
+from users.models import User
+from schedule.models import Event
 
 class TipoClase(models.Model):
     nombre = models.CharField(max_length=70, unique=True, verbose_name="Nombre de la clase")
@@ -32,7 +13,6 @@ class TipoClase(models.Model):
 
     def __str__(self):
         return self.nombre
-
 
 class HorarioClase(models.Model):
     DIAS_SEMANA = [
@@ -63,3 +43,24 @@ class HorarioClase(models.Model):
 
     def __str__(self):
         return f"{self.tipo_clase.nombre} - {self.get_dia_display()} {self.hora.strftime('%H:%M')}"
+
+class ReservaClase(models.Model):
+    usuario = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="reservas"
+    )
+
+    evento = models.ForeignKey(
+        Event,
+        on_delete=models.CASCADE,
+        related_name="reservas"
+    )
+
+    fecha_reserva = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ("usuario", "evento")
+
+    def __str__(self):
+        return f"{self.usuario.usuario} - {self.evento.title}"

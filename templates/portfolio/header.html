@@ -1,3 +1,4 @@
+{% load static %}
 
 <header class="public-header">
   <div class="container-header">
@@ -6,18 +7,48 @@
     </div>
 
     <div class="header-right">
-      <a href="{% url 'home' %}" class="nav-link">Inicio</a>
 
-       <div class="profile-menu" aria-label="Perfil / Login">
-        <i class="fas fa-user-circle"></i>
-      </div>
+      {% if user.is_authenticated %}
 
+        {% if request.path != '/inicio/' %}
+            <a href="{% url 'home' %}" class="nav-link">Home</a>
+        {% endif %}
 
-      <a class="signup-btn" href="{% url 'login' %}">Inscríbete</a>
-      <a class="phone-link" href="tel:+34600111222">
-        <i class="fas fa-phone"></i>
-        <span class="phone-text">600 111 222</span>
-      </a>
+        {% if user.is_staff or user.is_superuser %}
+
+            <a href="{% url 'inicio_admin' %}" class="nav-link">
+                Panel Admin
+            </a>
+
+        {% else %}
+            <a href="{% url 'inicio' %}" class="nav-link">
+                Mi Panel
+            </a>
+        {% endif %}
+
+        <a href="{% url 'logout' %}" class="nav-link">
+            Cerrar sesión
+        </a>
+
+      {% else %}
+
+        <a href="{% url 'home' %}" class="nav-link">Inicio</a>
+
+        <div class="profile-menu">
+          <i class="fas fa-user-circle"></i>
+        </div>
+
+        <a class="signup-btn" href="{% url 'login' %}">
+          Inscríbete o Inicia Sesión
+        </a>
+
+        <a class="phone-link" href="tel:+34600111222">
+          <i class="fas fa-phone"></i>
+          <span class="phone-text">600 111 222</span>
+        </a>
+
+      {% endif %}
+
     </div>
   </div>
 </header>

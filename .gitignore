@@ -7,3 +7,10 @@ nginx/
 adminpanel/
 
 trainifly/urls.py
+
+__pycache__/
+*.pyc
+
+staticfiles/
+
+.venv/

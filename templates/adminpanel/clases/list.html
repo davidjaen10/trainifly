@@ -1,22 +1,82 @@
-<h1>Administrar Clases</h1>
+{% extends 'portfolio/base.html' %}
+{% block header %}{% endblock %}
 
-<a href="{% url 'admin_clases_create' %}">Añadir nueva clase</a>
+{% block content %}
 
-<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Acciones</th>
-    </tr>
+<header class="admin-header">
+    <div class="logo">TrainiFly Admin</div>
 
-    {% for clase in clases %}
-    <tr>
-        <td>{{ clase.id }}</td>
-        <td>{{ clase.clase }}</td>
-        <td>
-            <a href="{% url 'admin_clases_edit' clase.id %}">Editar</a> |
-            <a href="{% url 'admin_clases_delete' clase.id %}">Eliminar</a>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+    <nav class="admin-nav">
+        <a href="{% url 'logout' %}" class="logout"><i class="fas fa-sign-out-alt">&nbsp;&nbsp;&nbsp;Salir</i></a>
+    </nav>
+</header>
+
+<div class="admin-clases">
+
+    <div class="admin-clases-top">
+        <h1>Administrar Clases</h1>
+
+        <div class="admin-clases-actions">
+
+            <a class="btn-back" href="{% url 'inicio_admin' %}">
+                <i class="fa-solid fa-arrow-left"></i>
+                INICIO
+            </a>
+
+            <a class="btn-sm" href="{% url 'admin_clases_create' %}">
+                <i class="fa-solid fa-plus"></i>
+                Añadir clase
+            </a>
+        </div>
+    </div>
+
+    {% if clases %}
+    <table class="table-simple">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Día</th>
+                <th>Hora</th>
+                <th>Capacidad máxima</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for clase in clases %}
+            <tr>
+                <td>{{ clase.id }}</td>
+                <td>{{ clase.tipo_clase.nombre }}</td>
+                <td>{{ clase.get_dia_display }}</td>
+                <td>{{ clase.hora|time:"H:i" }}</td>
+                <td>{{ clase.capacidad_max }}</td>
+                <td>
+                    <a class="action-edit" href="{% url 'admin_clases_edit' clase.id %}">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                        Editar
+                    </a>
+
+                    <a class="action-delete" href="{% url 'admin_clases_delete' clase.id %}">
+                        <i class="fa-solid fa-trash"></i>
+                        Eliminar
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% else %}
+    <div class="empty-state">
+        <p>No hay clases disponibles.</p>
+
+        <a href="{% url 'admin_clases_create' %}">
+            Crear la primera clase
+        </a>
+    </div>
+    {% endif %}
+
+</div>
+
+{% endblock %}

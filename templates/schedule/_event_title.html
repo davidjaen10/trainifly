@@ -1,0 +1,15 @@
+{% if occurrence.event.id in eventos_reservados %}
+
+    <span class="title">
+        {{ occurrence.title }} (Reservado)
+    </span>
+
+{% else %}
+
+    <a href="{% url 'reservar_clase' occurrence.event.id %}">
+        <span class="title">
+            {{ occurrence.title }}
+        </span>
+    </a>
+
+{% endif %}

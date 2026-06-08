@@ -69,6 +69,9 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'rest_framework',
+    'djoser',
+    'corsheaders',
+    'schedule',
 ]
 
 SITE_ID = 1
