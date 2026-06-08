@@ -1,0 +1,39 @@
+{% load scheduletags %}
+{% load extras %}
+<div>
+  {% if day.has_occurrences %}
+      {% for o in day.get_occurrence_partials %}
+              <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#occurrenceModal">
+
+                <div class="starttime">
+                    {% if o.class == 0 %}{{ o.occurrence.start|time:"G:i" }}{% endif %}
+                    {% if o.class == 1 %}{{ o.occurrence.start|time:"G:i" }}{% endif %}
+                    {% if o.class == 2 %}(All day){% endif %}
+                    {% if o.class == 3 %}Ends at {{ o.occurrence.end|time:"G:i" }}{% endif %}
+                </div>
+
+                {% title o.occurrence %}
+                <br>
+                {% with info=info_eventos|get_item:o.occurrence.event.id %}
+                    {{ info.ocupadas }} / {{ info.capacidad }} plazas ocupadas
+                {% endwith %}
+                
+              </button>
+
+              <div class="modal fade" id="occurrenceModal" tabindex="-1">
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h4>{{ o.occurrence.title }}</h4>
+                          </div>
+
+                          <div class="modal-body">
+                              {% include 'schedule/_detail.html' with occurrence=o.occurrence %}
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+      {% endfor %}
+  {% endif %}
+</div>

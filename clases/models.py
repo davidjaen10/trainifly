@@ -1,6 +1,7 @@
 from django.db import models
 from users.models import User
 from schedule.models import Event
+from django.shortcuts import redirect
 
 class TipoClase(models.Model):
     nombre = models.CharField(max_length=70, unique=True, verbose_name="Nombre de la clase")

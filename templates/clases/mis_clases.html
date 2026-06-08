@@ -1,4 +1,12 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/schedule.css' %}">
+
 <h2>Mis clases reservadas</h2>
+<div class="volver-container">
+    <a href="{% url 'inicio' %}" class="volver-btn">
+        ← Volver al panel
+    </a>
+</div>
 
 {% if reservas %}
 
@@ -13,6 +21,10 @@
             <p>
                 {{ reserva.evento.start|time:"H:i" }}
             </p>
+            <p>
+                <a href="{% url 'cancelar_reserva' reserva.id %}">Cancelar reserva
+    </a>
+</p>
         </div>
 
         <hr>

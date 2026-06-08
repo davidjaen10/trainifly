@@ -72,42 +72,94 @@ def sincronizar_clases():
                     Event.objects.create(
                         calendar=calendario,
                         title=h.tipo_clase.nombre,
-                        description=f"tipo:{h.tipo_clase.id}",
+                        description=f"horario:{h.id}",
                         start=fecha_inicio,
                         end=fecha_inicio + timedelta(hours=1),
                     )
 
 class CalendarioView(TemplateView):
     template_name = "portfolio/calendario.html"
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         sincronizar_clases()
+
         calendario, _ = Calendar.objects.get_or_create(
             name="Calendario Gimnasio",
             slug="calendario-gimnasio"
         )
+
         today = date.today()
+
         year = self.request.GET.get("year")
         month = self.request.GET.get("month")
+
         if year and month:
             year = int(year)
             month = int(month)
         else:
             year = today.year
             month = today.month
+
         period = Month(
             calendario.events.all(),
             date(year, month, 1)
         )
+
         tipo_id = self.request.GET.get("tipo")
+
         context["calendar"] = calendario
         context["period"] = period
         context["tipos"] = TipoClase.objects.all()
         context["tipo_activo"] = tipo_id
         context["now"] = today
         context["eventos"] = calendario.events.order_by("start")[:20]
-        context["eventos_reservados"] = list(ReservaClase.objects.filter(usuario=self.request.user).values_list("evento_id", flat=True)
-)
+
+        ocupacion = {}
+        capacidades = {}
+        info_eventos = {}
+
+        for evento in calendario.events.all():
+
+            reservas = evento.reservas.count()
+            ocupacion[evento.id] = reservas
+
+            if evento.description.startswith("horario:"):
+
+                horario_id = int(
+                    evento.description.replace("horario:", "")
+                )
+
+                try:
+                    horario = HorarioClase.objects.get(id=horario_id)
+
+                    capacidades[evento.id] = horario.capacidad_max
+
+                    info_eventos[evento.id] = {
+                        "ocupadas": reservas,
+                        "capacidad": horario.capacidad_max,
+                    }
+
+                except HorarioClase.DoesNotExist:
+                    capacidades[evento.id] = 0
+
+        context["ocupacion"] = ocupacion
+        context["capacidades"] = capacidades
+        context["info_eventos"] = info_eventos
+
+        context["eventos_reservados"] = list(
+            ReservaClase.objects.filter(
+                usuario=self.request.user
+            ).values_list("evento_id", flat=True)
+        )
+
+        mes_siguiente = (
+            today.replace(day=28) + timedelta(days=4)
+        ).replace(day=1)
+
+        context["mes_siguiente"] = mes_siguiente
+
         return context
     
 class InscribirseClasesView(View):
@@ -131,4 +183,14 @@ class ReservarClaseView(View):
             usuario=request.user,
             evento=evento
         )
+        return redirect("mis_clases")
+    
+class CancelarReservaView(View):
+    def get(self, request, reserva_id):
+
+        ReservaClase.objects.filter(
+            id=reserva_id,
+            usuario=request.user
+        ).delete()
+
         return redirect("mis_clases")

@@ -4,6 +4,11 @@
 <link rel="stylesheet" href="{% static 'css/schedule.css' %}">
 
 <h2 class="titulo-panel">Calendario de Clases</h2>
+<div class="volver-container">
+    <a href="{% url 'inicio' %}" class="volver-btn">
+        ← Volver al panel
+    </a>
+</div>
 
 <div class="filtros-clases">
 
@@ -34,8 +39,10 @@
 
             <h2>{{ period.start|date:"F Y" }}</h2>
 
-            <a href="?month={{ period.start.month|add:'1' }}&year={{ period.start.year }}"
-               class="nav-arrow">▶</a>
+            {% if period.start.month < mes_siguiente.month or period.start.year < mes_siguiente.year %}
+                <a href="?month={{ period.start.month|add:'1' }}&year={{ period.start.year }}"
+                class="nav-arrow">▶</a>
+            {% endif %}
 
         </div>
 
