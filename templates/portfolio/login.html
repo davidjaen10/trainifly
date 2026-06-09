@@ -1,4 +1,3 @@
-{% load socialaccount %}
 {% load static %}
 
 <!DOCTYPE html>
@@ -26,10 +25,6 @@
         <h2>Bienvenido!</h2>
 
         <a href="{% url 'crear' %}" class="btn">Crear Cuenta</a>
-
-        <a href="{% provider_login_url 'google' %}" class="google-btn">
-          <i class="fab fa-google"></i>
-        </a>
       </div>
     </div>
 
@@ -42,9 +37,7 @@
           <h1>Inicia Sesion</h1>
 
           <div class="social-icons">
-            <!-- <a href="{% provider_login_url 'google' %}" class="icon">
-              <i class="fa-brands fa-google"></i>
-            </a> -->
+           
           </div>
 
           <span>o usa tu email y contraseña</span>

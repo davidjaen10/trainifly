@@ -14,19 +14,13 @@ from pathlib import Path
 import os
 from .utils import get_secret
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = get_secret("SECRET_KEY")
 
 if not SECRET_KEY:
     raise Exception("SECRET_KEY no configurada")
 
-# SECURITY WARNING: don't run with debug turned on in production!
 
 environment_variable = os.environ.get('ENVIRONMENT', '')
 if environment_variable == 'development':
@@ -49,7 +43,6 @@ CSRF_TRUSTED_ORIGINS = [
     "https://www.trainifly.me",
 ]
 
-# Application definition
 #Aqui añadimos lo del crispy
 
 INSTALLED_APPS = [
@@ -123,8 +116,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'trainifly.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -201,11 +192,3 @@ DEFAULT_FROM_EMAIL = os.environ.get(
     "DEFAULT_FROM_EMAIL",
     "no-reply@trainifly.me"
 )
-
-EMAIL_USE_TLS = True
-
-EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
-
-SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
-
-DEFAULT_FROM_EMAIL = "no-reply@trainifly.me"

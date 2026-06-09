@@ -208,7 +208,6 @@ class ReservarClaseView(View):
 
         evento = get_object_or_404(Event, id=event_id)
 
-        # 🔴 CONTROL DE AFORO
         if evento.description.startswith("horario:"):
 
             horario_id = int(
@@ -229,23 +228,25 @@ class ReservarClaseView(View):
 
         if created and request.user.email:
 
-            send_mail(
-                subject="Reserva confirmada - TrainiFly",
-                message=f"""
-                    Hola {request.user.get_username()},
+            try:
+                send_mail(
+                    subject="Reserva confirmada - TrainiFly",
+                    message=f"""
+            Hola {request.user.get_username()},
 
-                    Tu reserva ha sido confirmada:
+            Tu reserva ha sido confirmada:
 
-                    Clase: {evento.title}
-                    Hora: {evento.start}
+            Clase: {evento.title}
+            Hora: {evento.start}
 
-                    ¡Te esperamos!
-                    """,
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[request.user.email],
-                fail_silently=False,
-            )
-
+            ¡Te esperamos!
+            """,
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[request.user.email],
+                    fail_silently=False,
+                )
+            except Exception as e:
+                print(f"ERROR EMAIL: {e}")
         return redirect("calendario_usuario")
     
 class CancelarReservaView(View):
