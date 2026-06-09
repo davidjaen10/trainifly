@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'users',
     'clases',
     'adminpanel',
@@ -193,13 +194,12 @@ STATIC_ROOT = "/code/staticfiles"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-
-EMAIL_USE_TLS = True
-
-EMAIL_HOST_USER = "djaenpardo@gmail.com"
-EMAIL_HOST_PASSWORD = "ijyc saqy xkcz uaei"
-
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_HOST = os.environ.get("EMAIL_HOST", "smtp.sendgrid.net")
+EMAIL_PORT = int(os.environ.get("EMAIL_PORT", 2525))
+EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", "True") == "True"
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "apikey")
+EMAIL_HOST_PASSWORD = "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"
+DEFAULT_FROM_EMAIL = os.environ.get(
+    "DEFAULT_FROM_EMAIL",
+    "no-reply@trainifly.me"
+)

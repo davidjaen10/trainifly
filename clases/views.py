@@ -222,19 +222,17 @@ class ReservarClaseView(View):
             if plazas_ocupadas >= horario.capacidad_max:
                 return redirect("calendario_usuario")
 
-        # 🔵 CREAR RESERVA
         reserva, created = ReservaClase.objects.get_or_create(
             usuario=request.user,
             evento=evento
         )
 
-        # 📧 EMAIL SOLO SI ES NUEVA RESERVA
         if created and request.user.email:
 
             send_mail(
                 subject="Reserva confirmada - TrainiFly",
                 message=f"""
-                    Hola {request.user.username},
+                    Hola {request.user.get_username()},
 
                     Tu reserva ha sido confirmada:
 

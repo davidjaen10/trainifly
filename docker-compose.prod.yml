@@ -29,6 +29,13 @@ services:
       DB_PASSWORD: david
       DB_HOST: db
       DB_PORT: 5432
+      EMAIL_HOST: smtp.sendgrid.net
+      EMAIL_PORT: "2525"
+      EMAIL_USE_TLS: "True"
+
+      EMAIL_HOST_USER: apikey
+      EMAIL_HOST_PASSWORD: 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
+      DEFAULT_FROM_EMAIL: no-reply@trainifly.me
     secrets:
       - SECRET_KEY
     volumes:
