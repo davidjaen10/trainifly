@@ -198,8 +198,19 @@ EMAIL_HOST = os.environ.get("EMAIL_HOST", "smtp.sendgrid.net")
 EMAIL_PORT = int(os.environ.get("EMAIL_PORT", 2525))
 EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", "True") == "True"
 EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "apikey")
-EMAIL_HOST_PASSWORD = "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"
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = os.environ.get(
     "DEFAULT_FROM_EMAIL",
     "no-reply@trainifly.me"
 )
+
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+
+EMAIL_USE_TLS = True
+
+EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
+
+SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
+
+DEFAULT_FROM_EMAIL = "no-reply@trainifly.me"
