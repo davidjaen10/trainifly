@@ -13,6 +13,8 @@ RUN adduser --disabled-password --gecos '' django_user
 
 COPY . .
 
+RUN sed -i 's/\r$//' /code/scripts_docker/prod/run_web.sh
+
 RUN mkdir -p /code/staticfiles \
     && chown -R django_user:django_user /code \
     && chmod -R 755 /code \

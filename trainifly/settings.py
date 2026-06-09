@@ -67,8 +67,6 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'allauth',
     'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
     'rest_framework',
     'djoser',
     'corsheaders',
@@ -203,9 +201,6 @@ DEFAULT_FROM_EMAIL = os.environ.get(
     "DEFAULT_FROM_EMAIL",
     "no-reply@trainifly.me"
 )
-
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
 
 EMAIL_USE_TLS = True
 
